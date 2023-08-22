@@ -8,5 +8,5 @@ class Notes(models.Model):
     create_date = models.DateTimeField(auto_now_add=True) # activated only at the time of creation (sql insertion)
 
     def __str__(self):
-        return self.body[0:50]
+        return self.body[0:50] # the first 50 character of the body of the note
     
