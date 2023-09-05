@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Notes
+from .notes_serializers import NotesSerializer
 # Create your views here.
 
+@api_view(['GET'])
 def getRoutes(request):
 
     routes = [
@@ -38,4 +41,18 @@ def getRoutes(request):
     },
     ]
 
-    return JsonResponse(routes, safe=False)
+    return Response(routes)
+
+@api_view(['GET'])
+def getNotes(request):
+    notes = Notes.objects.all()
+    serializer = NotesSerializer(notes, many=True)
+    return Response(serializer.data)
+
+
+# get specific one note by passing the integer that would come after notes/ as the primary_key
+@api_view(['GET'])
+def getNote(request, primary_key):
+    notes = Notes.objects.get(id=primary_key)
+    serializer = NotesSerializer(notes, many=False)
+    return Response(serializer.data)
