@@ -23,7 +23,11 @@ const NotesListPage = () => {
     };
 
     return (
-        <div>
+        <div className="notes">
+            <div className="notes-header">
+                <h2 className="notes-title">&#9782; Medications</h2>
+                <p className="notes-count">{notes.length}</p>
+            </div>
             <div className='notes-list'>
                 {/* notes is an array 
                 that resides in state hook.
