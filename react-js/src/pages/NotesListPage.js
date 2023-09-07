@@ -1,16 +1,23 @@
 import React, {useState, useEffect} from "react";
 import ListItem from "../components/ListItem";
 
+
 const NotesListPage = () => {
     let [notes, setNotes] = useState([]);
     
+    /* Every time your component renders, 
+    React will update the screen and then run 
+    the code inside useEffect. In other words,
+    useEffect "delays" a piece of code from
+    running until that render is reflected 
+    on the screen. */
     // this hook runs every single time of the component render
     useEffect(() => {
         getNotes();
     }, []);
 
     let getNotes = async () => {
-        let response = await fetch('http://127.0.0.1:8000/api/notes/')
+        let response = await fetch('/api/notes/')
         let data = await response.json()
         setNotes(data)
     };
@@ -36,7 +43,7 @@ const NotesListPage = () => {
                     // <div key={note.id}>
                     //     {JSON.stringify(note)}
                     // </div>
-                    <ListItem Key={i} NoteItem={note}/>
+                    <ListItem key={i} NoteItem={note}/>
                 ))}
 
             </div>
