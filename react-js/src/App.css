@@ -36,6 +36,7 @@
   color: inherit;
   font-size: inherit;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 
@@ -49,6 +50,9 @@ a {
   text-decoration: none;
 }
 
+table {
+  border-collapse: collapse;
+}
 /* APP STYLES */
 
 
@@ -64,7 +68,7 @@ a {
 
 .app {
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   height: 88vh;
   margin: 0 auto;
   background-color: var(--color-white);
@@ -146,6 +150,7 @@ a {
   margin-bottom: 12px;
   padding: 8px 16px;
   transition: all 0.2s ease-in-out;
+  overflow: hidden;
 }
 
 .notes-list-item:hover {
