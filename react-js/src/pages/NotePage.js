@@ -4,7 +4,7 @@ import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import Skeleton from "react-loading-skeleton"
 import 'react-loading-skeleton/dist/skeleton.css'
 import LoadingBar from 'react-top-loading-bar'
-import { Form } from 'react-bootstrap';
+
 const NotePage = () => {
     let noteId = useParams();
     let [note, setNote] = useState(null)
@@ -41,7 +41,22 @@ const NotePage = () => {
         // let data = await response.json()
         // setNote(data)
         }, 4000)}
-        
+
+    const handleChange = (event) => {
+        let keyFromTargetElement = event.target.id
+        setNote({...note, [keyFromTargetElement]: event.target.value}); // Dynamic Object Key in JavaScript
+        };
+
+    let updateNote = async() => {
+        setProgress(40);
+        let response = fetch(`/api/notes/${noteId.id}/update`, {
+            method: "PUT",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(note)
+    
+    });
+        setProgress(100);
+    }
     return (
         
         <div className="note">
@@ -69,62 +84,62 @@ const NotePage = () => {
                     height={13}/>
                     </center>) : (<div style={{height: "150vh", overflow: "auto"}}>
                     
-                        <div class="mb-5 row">
-                            <div class="col">
+                        <div className="mb-5 row">
+                            <div className="col">
                                 <label>Medication Name</label>
-                                <input type="text" required defaultValue={note?.medicine_name} class="form-control"/>
+                                <input id="medicine_name" type="text" onChange={handleChange} required defaultValue={note?.medicine_name} className="form-control"/>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 <label>Route of Adminstration</label>
-                                <input type="text" required defaultValue={note?.route_of_administration} class="form-control"/>
+                                <input id="route_of_administration" type="text" onChange={handleChange} required defaultValue={note?.route_of_administration} className="form-control"/>
                             </div>
                         </div>
-                        <div class="mb-5 row">
-                            <div class="col">
+                        <div className="mb-5 row">
+                            <div className="col">
                                 <label>Dosage Form</label>
-                                <input type="text" required defaultValue={note?.dosage_form} class="form-control"/>
+                                <input type="text" required defaultValue={note?.dosage_form} className="form-control"/>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 <label>Dosage</label>
-                                <input type="text" defaultValue={note?.dosage_quantity_of_units_per_time+" "+note?.dosage_unit_of_measure} class="form-control"/>
+                                <input type="text" defaultValue={note?.dosage_quantity_of_units_per_time+" "+note?.dosage_unit_of_measure} className="form-control"/>
                             </div>                            
-                            <div class="col">
+                            <div className="col">
                                 <label>Intake Frequency</label>
-                                <input type="text" defaultValue={note?.dosage_frequency+" "+((note?.dosage_frequency === 1) ? "time" : "times")+" "+note?.periodic_interval} class="form-control" id="phone_input" name="Phone"/>
+                                <input type="text" defaultValue={note?.dosage_frequency+" "+((note?.dosage_frequency === 1) ? "time" : "times")+" "+note?.periodic_interval} className="form-control" id="phone_input" name="Phone"/>
                             </div>
                         </div>
-                        <div class="mb-5 row">
-                            <div class="col-9">
+                        <div className="mb-5 row">
+                            <div className="col-9">
                                 <label>First Time of Intake</label>
-                                <input type="datetime-local" required defaultValue={note?.first_time_of_intake.slice(0, -1)} class="form-control"/>
+                                <input type="datetime-local" required defaultValue={note?.first_time_of_intake.slice(0, -1)} className="form-control"/>
                             </div>
 
                         </div>
-                        <div class="mb-5 row">
+                        <div className="mb-5 row">
                             <label>Is It a Chronic Medication?</label>
-                            <div class="col">                        <div class="form-check form-check-inline">
+                            <div className="col">                        <div className="form-check form-check-inline">
                             
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value={true} checked={note?.is_chronic_or_acute}/>
-                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value={true} defaultChecked={note?.is_chronic_or_acute}/>
+                            <label className="form-check-label" htmlFor="inlineRadio1">Yes</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value={false} checked={!note?.is_chronic_or_acute}/>
-                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value={false} defaultChecked={!note?.is_chronic_or_acute}/>
+                            <label className="form-check-label" htmlFor="inlineRadio2">No</label>
                         </div></div>
                         </div>
 
 
-                        <div class="mb-5 row">
-                            <div class="col-9">
+                        <div className="mb-5 row">
+                            <div className="col-9">
                                 <label>Stopping Time</label>
-                                <input type="datetime-local" disabled={note?.is_chronic_or_acute ? true : false} required defaultValue={note?.is_chronic_or_acute ? null : (note?.stopped_by_datetime.slice(0, -1))} class="form-control"/>
+                                <input type="datetime-local" disabled={note?.is_chronic_or_acute ? true : false} required defaultValue={note?.is_chronic_or_acute ? null : (note?.stopped_by_datetime.slice(0, -1))} className="form-control"/>
                             </div>
                         </div>
-                        <div class="mb-5">
+                        <div className="mb-5">
                             {/* <label>Regimen Notes</label> */}
-                            <textarea style={{backgroundColor: "wheat", height: "auto"}} defaultValue={note?.regimen_note} placeholder="Regimen Notes" class="form-control" id="message" name="message" rows="5"></textarea>
+                            <textarea style={{backgroundColor: "wheat", height: "auto"}} defaultValue={note?.regimen_note} placeholder="Regimen Notes" className="form-control" id="message" name="message" rows="5"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary px-4 btn-lg">Post</button>
+                        <button onClick={(e) => updateNote({})} className="btn btn-primary px-4 btn-lg">Update</button>
                     </div>)}
 
             </div>

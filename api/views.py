@@ -45,7 +45,7 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getReminders(request):
-    reminders = MedicineReminder.objects.all()
+    reminders = MedicineReminder.objects.all() # #.order_by('-updated')# add this if you want the response items to be sorted by update date in a descending manner
     serializer = MedicineReminderSerializer(reminders, many=True)
     return Response(serializer.data)
 
