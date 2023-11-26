@@ -98,6 +98,7 @@ const ListItem = ({NoteItem}) => {
   }
   let stoppedByDateTimeMomentObject = moment(NoteItem.stopped_by_datetime);
   let durationBetweenThePresentAndStoppedByDateTime = moment.duration(stoppedByDateTimeMomentObject.diff(moment()));
+  let stoppedAfterMomentDiffMonths = durationBetweenThePresentAndStoppedByDateTime.get('M');
   let stoppedAfterMomentDiffDays = durationBetweenThePresentAndStoppedByDateTime.get('d');
   let stoppedAfterMomentDiffHours = durationBetweenThePresentAndStoppedByDateTime.get('h');
   let stoppedAfterMomentDiffMinutes = durationBetweenThePresentAndStoppedByDateTime.get('m')
@@ -157,7 +158,7 @@ const ListItem = ({NoteItem}) => {
                     style={{display: "inline", position: "relative", top: 5+"px"}}
                     width="25px"
                   />
-                  {NoteItem.is_chronic_or_acute? <div style={{display: "inline"}}>This is a chronic medication and you shouldn't stop it without consulting your physician</div>: <div style={{display: "inline", width: 410+"px"}}>Stopped After {stoppedAfterMomentDiffDays} Days, {stoppedAfterMomentDiffHours} Hours</div>}
+                  {NoteItem.is_chronic_or_acute? <div style={{display: "inline"}}>This is a chronic medication and you shouldn't stop it without consulting your physician</div>: <div style={{display: "inline", width: 410+"px"}}>Stopped After {stoppedAfterMomentDiffMonths} Months, {stoppedAfterMomentDiffDays} Days, {stoppedAfterMomentDiffHours} Hours</div>}
                   
 
                   </td>
