@@ -67,3 +67,9 @@ def updateReminder(request, primary_key):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteReminder(request, primary_key):
+    reminder = MedicineReminder.objects.get(id=primary_key)
+    reminder.delete()
+    return Response("Reminder has been deleted!")

@@ -68,7 +68,7 @@ table {
 
 .app {
   width: 100%;
-  max-width: 520px;
+  max-width: 620px; /* was 520px */
   height: 88vh;
   margin: 0 auto;
   background-color: var(--color-white);

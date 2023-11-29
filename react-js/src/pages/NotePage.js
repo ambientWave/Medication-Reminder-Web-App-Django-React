@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import Skeleton from "react-loading-skeleton"
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -7,6 +7,7 @@ import LoadingBar from 'react-top-loading-bar'
 
 const NotePage = () => {
     let noteId = useParams();
+    const navigate = useNavigate();
     let [note, setNote] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -55,8 +56,31 @@ const NotePage = () => {
             body: JSON.stringify(note)
     
     });
+
+    setTimeout(() => {
+    setProgress(100);
+    }, 4000);
+    setTimeout(() => {
+    navigate('/');
+    }, 5000);
+
+    };
+
+    let deleteNote = async() => {
+        setProgress(40);
+        let response = fetch(`/api/notes/${noteId.id}/delete`, {
+            method: "DELETE",
+            headers: {"Content-type": "application/json"}
+    
+    });
+    setTimeout(() => {
         setProgress(100);
-    }
+        }, 4000);
+    setTimeout(() => {
+        navigate('/');
+        }, 5000);
+    };    
+
     return (
         
         <div className="note">
@@ -70,12 +94,13 @@ const NotePage = () => {
                         <ArrowLeft/>
                     </h3>
                 </Link>
+                <button onClick={deleteNote}>Delete</button>
 
                 
             </div>
             <div style={{height: "90vh", overflow: "auto"}}>{loading ? (<center>
                     <Skeleton baseColor="#202020" highlightColor="#444" style={{position: "relative", right: 95+"px"}} width="60%" height={17}/>
-                    <Skeleton 
+                    <Skeleton style={{position: "relative", right: 27+"px"}}
                     baseColor="#202020" 
                     highlightColor="#444" 
                     count={2} 

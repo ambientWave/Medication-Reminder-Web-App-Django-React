@@ -81,12 +81,14 @@ const ListItem = ({NoteItem}) => {
   }
   console.log(arrayDistributedDoseTimes);
   let nextTimeAdminstrationMomentDiff
+  let nextTimeAdminstrationMomentDiffMonths
   let nextTimeAdminstrationMomentDiffDays
   let nextTimeAdminstrationMomentDiffHours
   let nextTimeAdminstrationMomentDiffMinutes
   for(let momentObject of arrayDistributedDoseTimes) {
     if(momentObject.isAfter(moment())) {
       nextTimeAdminstrationMomentDiff = moment.duration(momentObject.diff(moment()))
+      nextTimeAdminstrationMomentDiffMonths = nextTimeAdminstrationMomentDiff.get('M');
       nextTimeAdminstrationMomentDiffDays = nextTimeAdminstrationMomentDiff.get('d');
       nextTimeAdminstrationMomentDiffHours = nextTimeAdminstrationMomentDiff.get('h');
       nextTimeAdminstrationMomentDiffMinutes = nextTimeAdminstrationMomentDiff.get('m')
@@ -144,7 +146,7 @@ const ListItem = ({NoteItem}) => {
                     style={{display: "inline", position: "relative", top: 10+"px"}}
                     width="30px"
                   />
-                  <div style={{display: "inline", width: 410+"px"}}>Next Dose After {nextTimeAdminstrationMomentDiffDays} Days, {nextTimeAdminstrationMomentDiffHours} Hours, {nextTimeAdminstrationMomentDiffMinutes} Minutes</div></td>
+                  <div style={{display: "inline", width: 410+"px"}}>Next Dose After {nextTimeAdminstrationMomentDiffMonths} Months, {nextTimeAdminstrationMomentDiffDays} Days, {nextTimeAdminstrationMomentDiffHours} Hours, {nextTimeAdminstrationMomentDiffMinutes} Minutes</div></td>
                 </tr>                  
                 </tbody>
 
