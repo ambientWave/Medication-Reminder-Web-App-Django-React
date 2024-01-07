@@ -22,7 +22,7 @@ class MedicineReminder(models.Model):
     dosage_frequency = models.PositiveIntegerField(null=True, blank=False) # (24h/dosageFrequency or 7d/dosageFrequency depending on perDayOrPwerWeek)
     first_time_of_intake = models.DateTimeField(null=True, blank=False, default=timezone.now) # the frontend need to taki into consideration that server has UTC timezone. All time records that is recieved need to accustomed to the client TZ
     is_chronic_or_acute = models.BooleanField(default=False, null=True, blank=False)
-    stopped_by_datetime = models.DateTimeField(null=True, blank=False, default=timezone.now)
+    stopped_by_datetime = models.DateTimeField(null=True, blank=True)
     # Second Approach
 
     # customDistributedRegimen/BooleanField

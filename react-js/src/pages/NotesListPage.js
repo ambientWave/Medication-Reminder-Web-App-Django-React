@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import ListItem from "../components/ListItem";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
+import AddButton from "../components/AddButton";
 
 const NotesListPage = () => {
     let [notes, setNotes] = useState([]);
@@ -63,8 +64,8 @@ const NotesListPage = () => {
                 fields and values of each record in database  */}
 
                 {loading? (<center>
-                    <Skeleton baseColor="#202020" highlightColor="#444" style={{position: "relative", right: 95+"px"}} width="60%"/>
-                    <Skeleton 
+                    <Skeleton baseColor="#202020" highlightColor="#444" style={{position: "relative", right: 95+"px"}} width="60%" height={17}/>
+                    <Skeleton style={{position: "relative", right: 27+"px"}}
                     baseColor="#202020" 
                     highlightColor="#444" 
                     count={2} 
@@ -86,7 +87,7 @@ const NotesListPage = () => {
                 )))}
 
             </div>
-            
+            <AddButton/>
 
 
         </div>

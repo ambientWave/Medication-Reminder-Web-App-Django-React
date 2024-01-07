@@ -57,6 +57,18 @@ def getReminder(request, primary_key):
     serializer = MedicineReminderSerializer(reminders, many=False)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def createReminder(request):
+    data = request.data
+    reminder = MedicineReminder.objects.create(medicine_name=data['medicine_name'], route_of_administration=data['route_of_administration'],
+                                               dosage_form=data['dosage_form'], dosage_unit_of_measure=data['dosage_unit_of_measure'],
+                                               dosage_quantity_of_units_per_time=data['dosage_quantity_of_units_per_time'],
+                                               regimen_note=data['regimen_note'], body=data['medicine_name'],
+                                               equally_distributed_regimen=True, periodic_interval=data['periodic_interval'],
+                                               dosage_frequency=data['dosage_frequency'], first_time_of_intake=data['first_time_of_intake'],
+                                               is_chronic_or_acute=data['is_chronic_or_acute'], stopped_by_datetime=data['stopped_by_datetime'])
+    serializer = MedicineReminderSerializer(reminder, many=False)
+    return Response(serializer.data)
 
 @api_view(['PUT'])
 def updateReminder(request, primary_key):
@@ -66,6 +78,9 @@ def updateReminder(request, primary_key):
     
     if serializer.is_valid():
         serializer.save()
+        ''' Model.save() does either INSERT or UPDATE of an object in a DB depending on its preexistence (if there's an existing primary key), while
+            Model.objects.create() does only INSERT
+        '''
     return Response(serializer.data)
 
 @api_view(['DELETE'])
