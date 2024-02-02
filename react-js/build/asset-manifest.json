@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.005ac9b6.css",
+    "main.js": "/static/js/main.71376587.js",
+    "static/media/stethoscope-with-coffee.jpg": "/static/media/stethoscope-with-coffee.bb1cb5255ff04b72ed87.jpg",
+    "static/media/stop.png": "/static/media/stop.f4bf3524ed415ca5eeb2.png",
+    "static/media/inj2.png": "/static/media/inj2.793fc72aa2c722e256dd.png",
+    "static/media/time2.png": "/static/media/time2.11ee65a2f8148dffab67.png",
+    "static/media/tabletAndCapsule.png": "/static/media/tabletAndCapsule.763272aeb4ac04b65821.png",
+    "index.html": "/index.html",
+    "static/media/add.svg": "/static/media/add.620f2dbee49608b4cb82109e2995ef6d.svg",
+    "static/media/arrow-left.svg": "/static/media/arrow-left.260f4b734320987d2b0ddd588d4aabac.svg",
+    "main.005ac9b6.css.map": "/static/css/main.005ac9b6.css.map",
+    "main.71376587.js.map": "/static/js/main.71376587.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.005ac9b6.css",
+    "static/js/main.71376587.js"
+  ]
+}

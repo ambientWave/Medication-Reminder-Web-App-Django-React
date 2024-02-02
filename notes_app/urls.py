@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')) # give the control to the the methods and data attributes inside the api.urls if the requested url is /api
+    path('api/', include('api.urls')), # give the control to the the methods and data attributes inside the api.urls if the requested url is /api
+    path('', TemplateView.as_view(template_name='index.html')) # because react manages all routing from within javascript code, this gives rise to routing problems if user decided to request a url directly
 ]
