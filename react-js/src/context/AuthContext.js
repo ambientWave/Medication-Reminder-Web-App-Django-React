@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+const swal = require('sweetalert2');
 
 const AuthContext = createContext();
 
@@ -10,24 +11,26 @@ export const AuthProvider = ({ children }) => {
     /* this hook is to track the token pair of the current logged user across the entire react app. The
     default behaviour is hardcoded to interact with local storage in the browser and fetch the item named 'authTokens'
     if present */
-    const [authTokens, setAuthTokens] = useState(() => {
+    const [authTokens, setAuthTokens] = useState(() => 
         localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
-    })
+    )
 
     /* this hook to track the logged user in the current session across the entire react app. The
     default behaviour is hardcoded to interact with local storage in the browser and fetch the item named 'authTokens'
-    if present, and decode using jwt_decode (mostlty involves base64 decoding) to extract readable string */
-    const [user, setUser] = useState(() => {
-        localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null
-    })
+    if present, and decode using jwtDecode (mostlty involves base64 decoding) to extract readable string */
+    const [user, setUser] = useState(() => 
+        localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null
+    )
 
     // to disable the login buttons, etc when user submit credentials so he/she can't submit repetitive times
     const [loading, setLoading] = useState(true)
+    const [disabled, setDisabled] = useState(false)
 
     const navigate = useNavigate()
 
     // obtain token pair during the login process
     const loginUser = async (email, password) => {
+        setDisabled(true)
         const response = await fetch('/api/token/', {
             method: 'POST',
             headers: {
@@ -40,12 +43,13 @@ export const AuthProvider = ({ children }) => {
         if(response.status === 200){
             // login process is successful
             setAuthTokens(data)
-            setUser(jwt_decode(data.access)) // the access token (not the refresh token) which is a base64 string that contains user profile info
+            setUser(jwtDecode(data.access)) // the access token (not the refresh token) which is a base64 string that contains user profile info
             localStorage.setItem("authTokens", JSON.stringify(data))
             navigate("/")
 
 
         } else {    
+            setDisabled(false)
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
@@ -62,6 +66,7 @@ export const AuthProvider = ({ children }) => {
 
     // submit registeration info to the its respective endpoint and navigate to login path
     const registerUser = async (email, username, password, password2) => {
+        setDisabled(true)
         const response = await fetch("/api/register/", {
             method: "POST",
             headers: {
@@ -84,6 +89,7 @@ export const AuthProvider = ({ children }) => {
                 showConfirmButton: false,
             })
         } else {
+            setDisabled(false)
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
@@ -115,7 +121,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     const contextData = {
-        user, 
+        disabled,
+        user,
         setUser,
         authTokens,
         setAuthTokens,
@@ -133,7 +140,7 @@ export const AuthProvider = ({ children }) => {
     // this hook runs implicitly, every single time of the component render, because variables in the dependency list are changed
     useEffect(() => {
         if (authTokens) {
-            setUser(jwt_decode(authTokens.access))
+            setUser(jwtDecode(authTokens.access))
         }
         setLoading(false)
     }, [authTokens, loading])

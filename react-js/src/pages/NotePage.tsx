@@ -8,6 +8,7 @@ import moment from "moment";
 import { nullable, z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form";
+import useAxios from "../utils/UseAxios";
 
 
 const NotePage = () => {
@@ -17,6 +18,7 @@ const NotePage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [progress, setProgress] = useState(0);
+    const api = useAxios();
 
     const formSchema = z.object({medicine_name: z.string({required_error: "Medication name is required",
     invalid_type_error: "Please enter a clear and detailed medication name. The name should, preferably, include the strength, form and quantity of dosage units if applicable",
@@ -66,12 +68,12 @@ const NotePage = () => {
                 setProgress(100);
                 setLoading(false);
                 return} else {
-            fetch(`/api/notes/${noteId.id}`)
+            api.get(`/api/notes/${noteId.id}`)
             .then(response => {
-                if(!response.ok){
+                if(!(response.status === 200 && response.statusText === 'OK')){
                     throw Error('Sorry, some error occurred while fetching your reminder.');
                 }
-                return response.json();
+                return response.data;
             })
             .then(data => {
                 console.log(data);
@@ -84,6 +86,9 @@ const NotePage = () => {
             .catch(err => {
                 console.log(err.message);
                 setError(true);
+                if(err.response.status === 401){ //Unauthorized
+                    navigate("/login");
+                }
             })
         // let response = await fetch(`/api/notes/${noteId.id}`)
         // let data = await response.json()
@@ -167,8 +172,7 @@ const NotePage = () => {
         if (noteId.id === 'new') {
             setProgress(40);
 
-            let response = fetch(`/api/notes/create`, {
-                method: "POST",
+            let response = api.post(`/api/notes/create`, {
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify(data)
         
@@ -183,8 +187,7 @@ const NotePage = () => {
         
         } else {
             setProgress(40);
-            let response = fetch(`/api/notes/${noteId.id}/update`, {
-                method: "PUT",
+            let response = api.put(`/api/notes/${noteId.id}/update`, {
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify(data)
         
@@ -242,7 +245,6 @@ const NotePage = () => {
 
 
             let response = fetch(`/api/notes/create`, {
-                method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify(note, jsonDataTypeReplacer)
         
@@ -260,7 +262,6 @@ const NotePage = () => {
     let updateNote = async() => {
         setProgress(40);
         let response = fetch(`/api/notes/${noteId.id}/update`, {
-            method: "PUT",
             headers: {"Content-type": "application/json"},
             body: JSON.stringify(note, jsonDataTypeReplacer)
     
@@ -277,8 +278,7 @@ const NotePage = () => {
 
     let deleteNote = async() => {
         setProgress(40);
-        let response = fetch(`/api/notes/${noteId.id}/delete`, {
-            method: "DELETE",
+        let response = api.delete(`/api/notes/${noteId.id}/delete`, {
             headers: {"Content-type": "application/json"}
     
     });
@@ -317,7 +317,7 @@ const NotePage = () => {
                     </h3>
                 </Link>
                 {noteId.id !== "new" ? <button onClick={deleteNote}>Delete</button> 
-                : (<button onClick={(e) => createNote()}>Done</button>)}
+                : (<button onClick={(e) => handleSubmit(onSubmit)}>Done</button>)}
 
 
             </div>

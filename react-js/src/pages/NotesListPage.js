@@ -3,12 +3,16 @@ import ListItem from "../components/ListItem";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import AddButton from "../components/AddButton";
+import useAxios from "../utils/UseAxios";
+import { useNavigate } from "react-router-dom";
 
 const NotesListPage = () => {
     let [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    
+    const api = useAxios();
+    const navigate = useNavigate();
+
     /* Every time your component renders, 
     React will update the screen and then run 
     the code inside useEffect. In other words,
@@ -23,21 +27,25 @@ const NotesListPage = () => {
     let getNotes = async () => {
 
         setTimeout(() => {
-            fetch('/api/notes/')
+            api.get('/api/notes/')
             .then(response => {
-                if(!response.ok){
+                if(!(response.status === 200 && response.statusText === 'OK')){
                     throw Error('Sorry, some error occurred while fetching your reminders.');
                 }
-                return response.json();
+                return response.data;
             })
             .then(data => {
                 setNotes(data);
+                console.log(notes);
                 setLoading(false);
                 setError(false);
             })
             .catch(err => {
                 console.log(err.message);
                 setError(true);
+                if(err.response.status === 401){ //Unauthorized
+                    navigate("/login");
+                }
             })
  
         }, 4000)
@@ -63,6 +71,7 @@ const NotesListPage = () => {
                 Each object contains the different data
                 fields and values of each record in database  */}
 
+                {/* there must be a message prompted to user saying "You don't have any reminders" if the fetched object is empty in NotesListPage */}
                 {loading? (<center>
                     <Skeleton baseColor="#202020" highlightColor="#444" style={{position: "relative", right: 95+"px"}} width="60%" height={17}/>
                     <Skeleton style={{position: "relative", right: 27+"px"}}
