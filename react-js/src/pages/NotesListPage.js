@@ -44,7 +44,8 @@ const NotesListPage = () => {
                 console.log(err.message);
                 setError(true);
                 if(err.response.status === 401){ //Unauthorized
-                    navigate("/login");
+                    getNotes();
+                    // navigate("/login");
                 }
             })
  

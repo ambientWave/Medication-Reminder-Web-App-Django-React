@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
             setAuthTokens(data)
             setUser(jwtDecode(data.access)) // the access token (not the refresh token) which is a base64 string that contains user profile info
             localStorage.setItem("authTokens", JSON.stringify(data))
+            setDisabled(false)
             navigate("/")
 
 
@@ -78,6 +79,7 @@ export const AuthProvider = ({ children }) => {
         })
 
         if(response.status === 201){ // http status code for a created resource
+            setDisabled(false)
             navigate("/login")
             swal.fire({
                 title: "Registration Successful, Login Now",

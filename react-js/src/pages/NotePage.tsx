@@ -38,11 +38,11 @@ const NotePage = () => {
         errorMap: (issue, { defaultError }) => ({
         message: issue.code === "invalid_date" ? "A valid date and time must be entered!" : defaultError,
         }), // the supplied is_chronic_or_acute input from html field is always text and prior to calling the api, values need to be converted to true boolean types
-    }), is_chronic_or_acute: z.string().transform((val) => ((val === 'true') ? true : false)), stopped_by_datetime: z.string({
+    }), is_chronic_or_acute: z.string().transform((val) => ((val === 'true') ? true : false)), stopped_by_datetime: z.coerce.date({
         errorMap: (issue, { defaultError }) => ({ // as the case with first_time_of_intake, zod date fields have issues with standard errors attributes therefore a workaround is implemented using errorMap
         message: issue.code === "invalid_date" ? "A valid date and time must be entered!" : defaultError,
         }), // allow the values of this field to be null and able to transform supplied empty values to null even if the field must be validated as date objects
-    }).nullable().transform((val) => ((val === '') || (val === undefined) ? null : val)), regimen_note: z.string()}).refine( input => {
+    }).or(z.string().max(0)).nullable().transform((val) => ((val === '') || (val === undefined) ? null : val)), regimen_note: z.string()}).refine( input => {
 
     // allows stopped_by_datetime to be optional only when is_chronic_or_acute is true
     if (input.is_chronic_or_acute !== true && input.stopped_by_datetime === undefined) return false

@@ -6,6 +6,7 @@ from .notes_serializers import MedicineReminderSerializer, UserSerializer, Regis
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
+import json
 # Create your views (how data is represented in exposed endpoints) here.
 
 @api_view(['GET'])
@@ -67,7 +68,7 @@ def getReminder(request, primary_key):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) # disallow all http requests from unauthenticated users
 def createReminder(request):
-    data = request.data
+    data = json.loads(request.data['body']) # request.data
     reminder = MedicineReminder.objects.create(user=request.user, medicine_name=data['medicine_name'], route_of_administration=data['route_of_administration'],
                                                dosage_form=data['dosage_form'], dosage_unit_of_measure=data['dosage_unit_of_measure'],
                                                dosage_quantity_of_units_per_time=data['dosage_quantity_of_units_per_time'],
@@ -81,10 +82,12 @@ def createReminder(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated]) # disallow all http requests from unauthenticated users
 def updateReminder(request, primary_key):
-    data = request.data # new data from entered by user in the frontend
-    reminder = MedicineReminder.objects.get(id=primary_key, user=request.user)
-    serializer = MedicineReminderSerializer(instance=reminder, data=data)
-    
+    data = json.loads(request.data['body']) # new data from entered by user in the frontend
+    data['user'] = request.user.id
+    stored_reminder = MedicineReminder.objects.get(id=primary_key, user=request.user)
+    serializer = MedicineReminderSerializer(instance=stored_reminder, data=data)
+    serializer.is_valid()
+
     if serializer.is_valid():
         serializer.save()
         ''' Model.save() does either INSERT or UPDATE of an object in a DB depending on its preexistence (if there's an existing primary key), while

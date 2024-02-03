@@ -19,11 +19,15 @@ const useAxios = () => {
 
     axiosInstance.interceptors.request.use(async request => {
         const user = jwtDecode(authTokens.access);
-        const isNotExpired = dayjs.unix(user.exp).diff(dayjs()) < 1 // if expiration unix timestamp (ms) of access token is different from current timestamp by 1 ms then it's expired
-
+        const isNegativeDiff = dayjs.unix(user.exp).diff(dayjs()) > 1 // if expiration unix timestamp (ms) of access token is different from current timestamp by 1 ms then it's expired
+        console.log(dayjs.unix(user.exp).diff(dayjs()))
+        console.log(dayjs.unix(user.exp))
+        console.log(dayjs())
+        console.log(isNegativeDiff)
         // the request with modified headers
-        if (isNotExpired) return request
-
+        if (!isNegativeDiff) return request
+        /* if user removed access tokens from local storage and signed in with different user,
+         the refresh token gets blacklisted. Therefore, logout method should handle this issue gracefully */
         const response = await axios.post(`${endpointRelativePath}token/refresh/`, {
             refresh: authTokens.refresh
         })
