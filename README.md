@@ -20,6 +20,7 @@
 
 ## Technology
 - Python, WSGI, Werkzeug, Django
-- ReactJS, JavaScript, TypeScript, CSS, HTML
+- CSS, HTML
+- ReactJS, JavaScript, TypeScript, Zod, React Hook Form
 - HTTP, REST API, JSON, JWT
 - SQLite
