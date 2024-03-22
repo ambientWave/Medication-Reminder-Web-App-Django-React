@@ -19,7 +19,7 @@
 ### `python manage.py runserver`
 
 ## Technology
-- Python, WSGI, Werkzeug, Django
+- Python, WSGI, Werkzeug, Django 4.2.4
 - HTML, CSS
 - ReactJS, JavaScript, TypeScript, Zod, React Hook Form
 - HTTP, REST API, JSON, JWT
