@@ -9,3 +9,17 @@
 <video src="https://github.com/ambientWave/Django-React-Medication-Reminder/assets/140031905/7568c064-ced0-4b03-944d-b37df000b7e5"></video>
 ## Each user has his/her own reminders 
 <video src="https://github.com/ambientWave/Django-React-Medication-Reminder/assets/140031905/4754574f-81d4-4e2e-a80d-f51d45ea303b"></video>
+## Instructions for Running the Application
+1. clone the repository
+2. (optional but preferable) create a virtual environment
+3. install the dependencies in the requirements.txt file using pip
+5. open a new terminal and make sure that you are in the directory of the cloned repository
+6. run the app using the following command:
+
+### `python manage.py runserver`
+
+## Technology
+- Python, Werkzeug, Django
+- ReactJS, JavaScript, TypeScript, CSS, HTML
+- HTTP, REST API, JSON, JWT
+- SQLite
