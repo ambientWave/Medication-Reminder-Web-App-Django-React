@@ -12,11 +12,21 @@
 ## Instructions for Running the Application
 1. clone the repository
 2. (optional but preferable) create a virtual environment
-3. install the dependencies in the requirements.txt file using pip
+3. install python dependencies in the requirements.txt file using pip
 5. open a new terminal and make sure that you are in the directory of the cloned repository
-6. run the app using the following command:
+6. run the backend application using the following command:
 
 ### `python manage.py runserver`
+
+7. make sure that node.js is installed on your operating system
+8. open a new terminal instance and navigate your way to the directory `./react-js` where react application resides
+9. install node dependencies by using the following command:
+
+### `npm install`
+
+10. run the frontend application using the following command:
+
+### `npm start`
 
 ## Technology
 - Python, WSGI, Werkzeug, Django 4.2.4
