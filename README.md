@@ -31,6 +31,6 @@
 ## Technology
 - Python 3.11, WSGI, Werkzeug, Django 4.2.4
 - HTML, CSS
-- ReactJS, JavaScript, TypeScript, Zod, React Hook Form
+- ReactJS, JavaScript, TypeScript 5.3.3 (ideally >=3.3.1 and <5.2.0), Zod, React Hook Form
 - HTTP, REST API, JSON, JWT
 - SQLite
