@@ -29,7 +29,7 @@
 ### `npm start`
 
 ## Technology
-- Python, WSGI, Werkzeug, Django 4.2.4
+- Python 3.11, WSGI, Werkzeug, Django 4.2.4
 - HTML, CSS
 - ReactJS, JavaScript, TypeScript, Zod, React Hook Form
 - HTTP, REST API, JSON, JWT
