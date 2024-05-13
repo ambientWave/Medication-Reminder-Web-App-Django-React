@@ -1,7 +1,9 @@
 # Django-React-Medication-Reminder
+
 <picture>
  <img alt="Screenshot1" src="https://raw.githubusercontent.com/ambientWave/Medication-Reminder-Django-React/reminder_app_with_login_jwt_separate_backend_frontend/Banner.png">
 </picture>
+
 ## Registration and login
 <video src="https://github.com/ambientWave/Django-React-Medication-Reminder/assets/140031905/1475c58d-eabd-4be9-b2c1-0e0429553d0a"></video>
 ## Creating Reminders
