@@ -39,3 +39,7 @@ https://github.com/ambientWave/Django-React-Medication-Reminder/assets/140031905
 - ReactJS, JavaScript, TypeScript 5.3.3 (ideally >=3.3.1 and <5.2.0), Zod, React Hook Form
 - HTTP, REST API, JSON, JWT
 - SQLite
+
+## Acknowledgments
+This project was inspired by @divanov11 through his tutorial [Django + React Notes App](https://www.youtube.com/watch?v=tYKRAXIio28) and @desphixs through his tutorial [Django (DRF) & React Authentication - Register, Login, Logout, Database, Profile, JWT Token](https://www.youtube.com/watch?v=oj2qV9HHabM)
+
